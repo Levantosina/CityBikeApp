@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <title>Show</title>
+</head>
+<style>
+    .list {
+        border-collapse: collapse;
+        margin: 10px 0;
+        font-size: 0.9em;
+        font-family: sans-serif;
+        min-width: 400px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    }
+    .stations:visited {
+      color: #000000;
+    }
+</style>
+<body>
+<!-- return info about journey-->
+<div class="list" th:each="journey : ${station}">
+ <a class="stations" th:href="@{/journey/show/page/{currentPage}/{id}(id=${journey.getDepartureStationName()}, currentPage=${currentPage})}"
+    th:text="${journey.getDepartureStationName()}">user</a>
+</div>
+
+
+
+<footer style="=font-size:large"class="panel-footer">
+ <nav aria-label="Page navigation ">
+
+     <!--pagination-->
+         </br>
+         <a  class="page-link" th:if="${currentPage > 1}" th:href="@{/journey/show/page/1}" >First</a>
+         <span th:unless="${currentPage > 1}">First</span>&nbsp;&nbsp;
+
+         <a th:if="${currentPage > 1}" th:href="@{'/journey/show/page/' + ${currentPage - 1}}">Previous</a>
+         <span th:unless="${currentPage > 1}">Previous</span>&nbsp;&nbsp;
+
+         <span th:each="i: ${#numbers.sequence(1, 10)}">
+                 <a th:if="${i != currentPage}" th:href="@{'/journey/show/page/' + ${i}}">[[${i}]]</a>
+                 <span th:unless="${i != currentPage}">[[${i}]]</span>&nbsp;&nbsp;
+                 </span>
+         <a th:if="${currentPage < totalPages}" th:href="@{'/journey/show/page/' + ${currentPage + 1}}">Next</a>
+         <span th:unless="${currentPage < totalPages}"></span>&nbsp;&nbsp;
+         <a th:if="${currentPage > totalPages}" th:href="@{'/journey/show/page/' + ${currentPage }}"></a>
+         <span th:unless="${currentPage > totalPages}"></span>&nbsp;&nbsp;
+
+         <a th:if="${currentPage <totalPages}" th:href="@{'/journey/show/page/' + ${totalPages}}">Last</a>
+         <span th:unless="${currentPage < totalPages}"></span>
+
+
+       </nav>
+       Total Items [[${totalItems}]] : Page [[${currentPage}]] of [[${totalPages}]]
+        </br>
+       </br>
+       <a href="/journey">Main page</a>
+     </footer>
+     </body>
+     </html>

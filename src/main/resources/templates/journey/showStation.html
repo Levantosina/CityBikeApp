@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Test</title>
+</head>
+
+<style>
+    .styled-table {
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 0.9em;
+        font-family: sans-serif;
+        min-width: 400px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    }
+    .styled-table thead tr {
+        background-color: #009879;
+        color: #ffffff;
+        text-align: left;
+    }
+    .styled-table th,
+    .styled-table td {
+        padding: 12px 15px;
+    }
+
+
+</style>
+<body>
+
+
+
+
+<table class="styled-table">
+    <thead>
+    <tr>
+        <th>Departure time</th>
+        <th>Covered distance</th>
+        <th>Duration</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="station : ${station}">
+        <td th:text="${station.getDeparture()}"></td>
+        <td th:text="${station.getCoveredDistance()}"></td>
+        <td th:text="${station.getDuration()}"></td>
+    </tr>
+    </tbody>
+</table>
+<footer style="=font-size:large"class="panel-footer">
+    <nav aria-label="Page navigation ">
+
+        </br>
+        <a  class="page-link" th:if="${currentPage > 1}" th:href="@{'/journey/show/page/'+1+'/'+${id}}" >First</a>
+        <span th:unless="${currentPage > 1}">First</span>&nbsp;&nbsp;
+
+        <a th:if="${currentPage > 1}" th:href="@{'/journey/show/page/'+ ${currentPage - 1}+'/'+${id} }">Previous</a>
+        <span th:unless="${currentPage > 1}">Previous</span>&nbsp;&nbsp;
+
+        <span th:each="i: ${#numbers.sequence(1, 10)}">
+            <a th:if="${i != currentPage}" th:href="@{'/journey/show/page/' + ${i}+'/'+${id}}">[[${i}]]</a>
+            <span th:unless="${i != currentPage}">[[${i}]]</span>&nbsp;&nbsp;
+            </span>
+        <a th:if="${currentPage < totalPages}" th:href="@{'/journey/show/page/'+ ${currentPage + 1}+'/'+${id}}">Next</a>
+        <span th:unless="${currentPage < totalPages}"></span>&nbsp;&nbsp;
+        <a th:if="${currentPage> totalPages}" th:href="@{'/journey/show/page/'+ ${currentPage }+'/'+${id}}"></a>
+        <span th:unless="${currentPage > totalPages}"></span>&nbsp;&nbsp;
+
+        <a th:if="${currentPage <totalPages}" th:href="@{'/journey/show/page/' + ${totalPages}+'/'+${id}}">Last</a>
+        <span th:unless="${currentPage < totalPages}"></span>
+
+
+    </nav>
+    Total Items [[${totalItems}]] : Page [[${currentPage}]] of [[${totalPages}]]
+
+    </br>
+    </br>
+    <a href="/journey/show/page/1">List of stations</a>
+    </br>
+    </br>
+    <a href="/journey">Main page</a>
+</footer>
+
+</body>
+</html>

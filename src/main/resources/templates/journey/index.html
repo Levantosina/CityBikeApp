@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+</head>
+<style>
+    .styled-table {
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 0.9em;
+        font-family: sans-serif;
+        min-width: 400px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    }
+    .styled-table thead tr {
+        background-color: #009879;
+        color: #ffffff;
+        text-align: left;
+    }
+    .styled-table th,
+    .styled-table td {
+        padding: 12px 15px;
+    }
+
+
+</style>
+
+<body>
+
+
+
+<form th:action="@{'/journey/page/1?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">
+    Search by stations <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}" required />
+    <input type="hidden" name="sortField" value="departureStationName">
+    <input type="hidden" name="sortDir" value="asc">
+    &nbsp;
+    <input type="submit" value="Search" />
+
+
+
+</form>
+<br/>
+<br/>
+<a href="/journey/add">Create a new journey</a>
+
+<table class="styled-table">
+    <thead>
+    <tr>
+
+
+        <!--implementing sorting by columns-->
+
+       <th><a th:href="@{'/journey/page/' + ${currentPage} + '?sortField=departureStationName&sortDir=' + ${reverseSortDir}}">Departure station name</a></th>
+
+
+       <th><a th:href="@{'/journey/page/' + ${currentPage} + '?sortField=returnStationName&sortDir=' + ${reverseSortDir}}">Return station name</a></th>
+
+
+       <th><a th:href="@{'/journey/page/' + ${currentPage} + '?sortField=coveredDistance&sortDir=' + ${reverseSortDir}}">Covered distance</a></th>
+
+
+       <th><a th:href="@{'/journey/page/' + ${currentPage} + '?sortField=duration&sortDir=' + ${reverseSortDir}}">Duration</a></th>
+   </tr>
+   </thead>
+   <tbody>
+   <tr th:each="st : ${station}">
+
+       <td th:text="${st.getDepartureStationName()}">departure</td>
+       <td th:text="${st.getReturnStationName()}">departure</td>
+       <td th:text="${st.getCoveredDistance()}">departure</td>
+       <td th:text="${st.getDuration()}">departure</td>
+       <td>
+
+
+           <!--method for deleting journey -->
+
+          <form th:action="@{'/journey/delete/' + ${st.getDepartureStationName()}}" th:method="post" method="post" onsubmit="return confirm('Are you sure you want to delete this journey?')">
+              <input type="hidden" name="_method" value="DELETE">
+              <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+
+
+      </td>
+  </tr>
+  </tbody>
+
+</table>
+<a href="/journey/show/page/1">List of Stations</a>
+
+<!--implementing pagination-->
+
+<footer style="=font-size:large"class="panel-footer">
+ <nav aria-label="Page navigation ">
+     Total Items [[${totalItems}]] : Page [[${currentPage}]] of [[${totalPages}]]
+
+     </br>
+     <a  class="page-link" th:if="${currentPage > 1}" th:href="@{'/journey/page/1?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}" >First</a>
+     <span th:unless="${currentPage > 1}">First</span>&nbsp;&nbsp;
+
+     <a th:if="${currentPage > 1}" th:href="@{'/journey/page/' + ${currentPage - 1}+'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Previous</a>
+     <span th:unless="${currentPage > 1}">Previous</span>&nbsp;&nbsp;
+
+     <span th:each="i: ${#numbers.sequence(1, 10)}">
+         <a th:if="${i != currentPage}" th:href="@{'/journey/page/' + ${i}+'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+         <span th:unless="${i != currentPage}">[[${i}]]</span>&nbsp;&nbsp;
+         </span>
+     <a th:if="${currentPage < totalPages}" th:href="@{'/journey/page/' + ${currentPage + 1}+'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+     <span th:unless="${currentPage < totalPages}">Next</span>&nbsp;&nbsp;
+
+
+     <a th:if="${currentPage < totalPages}" th:href="@{'/journey/page/' + ${totalPages}+'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
+     <span th:unless="${currentPage < totalPages}">Last</span>
+ </nav>
+</footer>
+</body>
+</html>
