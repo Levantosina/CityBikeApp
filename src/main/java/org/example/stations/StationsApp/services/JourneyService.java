@@ -2,13 +2,14 @@ package org.example.stations.StationsApp.services;
 
 
 import org.example.stations.StationsApp.models.Journey;
+
 import org.example.stations.StationsApp.repositories.*;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.security.Provider;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Levantosina
@@ -38,10 +39,10 @@ public class JourneyService {
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
                 Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(pageNum - 1, PAGE_SIZE, sort);
-        if(keyword!=null)
-            return journeyRepository.search(keyword, pageable);
+        if(keyword==null)
+            return journeyRepository.findAll(pageable);
         else
-            return journeyRepository.findALLSt(pageable);
+            return journeyRepository.search(keyword, pageable);
     }
 
     public Page<Journey> findTest(String id) {
@@ -56,10 +57,6 @@ public class JourneyService {
     public void deleteJourneyById( String departureStationName) {
         journeyRepository.deleteByDepartureStationName(departureStationName);
     }
-
-
-
-
     @Transactional
     public void addJourney(Journey journey) {
         // Set the departure and return time automatically
@@ -82,45 +79,17 @@ public class JourneyService {
         journeyRepository.save(journey);
     }
 
+    public List<Journey> getMostPopularDepartureStations() {
 
-//    public Page<Journey> findByKeyword(String keyword, int currentPage, String sortField, String sortDir) {
-//        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
-//        Pageable pageable = PageRequest.of(currentPage - 1, PAGE_SIZE, sort);
-//        return journeyRepository.findByDepartureStationName(keyword, pageable);
-//    }
-//    public Page<Test> findstationMayByPage(int pageNumber) {
-//        Pageable pageable = PageRequest.of(pageNumber - 1, PAGE_SIZE);
-//        return stationsRepository.findStation(pageable);
-//
-//
-//    }
-
+        List<Journey> popularDepartureStations = journeyRepository.findMostPopularDepartureStation(PageRequest.of(0, 5));
+        return popularDepartureStations;
+    }
 
 
 }
 
 
 
-//    public Page<? extends JourneySuperclass> getListOfStations(int pageNum, String sortField, String sortDir, String keyword) {
-//        Sort sort = Sort.by(sortField).descending(); // Default sorting in descending order
-//        if (sortDir.equalsIgnoreCase(Sort.Direction.ASC.name())) {
-//            sort = Sort.by(sortField).ascending();
-//        }
-//        Pageable pageable = PageRequest.of(pageNum - 1, PAGE_SIZE, sort);
-//
-//        Page<Journey> page1 = journeyRepository.findALLSt(pageable);
-//        Page<JourneyJ> page2 = journeyJJ.findALLStJ(pageable);
-//
-//        List<JourneySuperclass> combinedList = new ArrayList<>();
-//        combinedList.addAll(page1.getContent());
-//        combinedList.addAll(page2.getContent());
-//
-//        if (keyword != null && !keyword.isEmpty()) {
-//            // Assuming search method is implemented in journeyRepository
-//            return journeyRepository.search(keyword, pageable);
-//        } else {
-//            return new PageImpl<>(combinedList, pageable, combinedList.size());
-//        }
-//    }
+
 
 

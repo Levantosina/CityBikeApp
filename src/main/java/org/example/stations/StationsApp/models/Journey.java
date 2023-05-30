@@ -80,18 +80,6 @@ public class Journey {
         this.departureStationName = departureStationName;
     }
 
-
-
-
-
-
-
-    //  @OneToMany(mappedBy = "june", cascade = CascadeType.ALL)
-    //private List<JourneyJ> test1List;
-//
-//    @OneToMany(mappedBy = "test", cascade = CascadeType.ALL)
-//    private List<stationMay> test2List;
-
     public Integer getId() {
         return id;
     }
@@ -164,20 +152,4 @@ public class Journey {
         this.duration = duration;
     }
 
-
-//    public List<stationJune> getTest1List() {
-//        return test1List;
-//    }
-//
-//    public void setTest1List(List<stationJune> test1List) {
-//        this.test1List = test1List;
-//    }
-//
-//    public List<stationMay> getTest2List() {
-//        return test2List;
-//    }
-//
-//    public void setTest2List(List<stationMay> test2List) {
-//        this.test2List = test2List;
-//    }
 }

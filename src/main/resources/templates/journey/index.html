@@ -26,6 +26,41 @@
         padding: 12px 15px;
     }
 
+    .mp {
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 0.9em;
+        font-family: sans-serif;
+        min-width: 400px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    }
+    .styled-table thead tr {
+        background-color: #009879;
+        color: #ffffff;
+        text-align: left;
+    }
+    .styled-table th,
+    .styled-table td {
+        padding: 12px 15px;
+    }
+
+     .container {
+         display: flex;
+     }
+
+    .styled-table {
+        flex-grow: 1;
+        margin-right: 20px;
+    }
+
+    .mpTable {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .mpTable {
+        margin-bottom: 20px;
+    }
 
 </style>
 
@@ -46,7 +81,7 @@
 <br/>
 <br/>
 <a href="/journey/add">Create a new journey</a>
-
+<div class="container">
 <table class="styled-table">
     <thead>
     <tr>
@@ -89,6 +124,9 @@
   </tbody>
 
 </table>
+
+</div>
+
 <a href="/journey/show/page/1">List of Stations</a>
 
 <!--implementing pagination-->

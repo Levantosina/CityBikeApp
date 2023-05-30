@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+</head>
+<body>
+<table class="mpTable">
+    <thead>
+    <tr>
+        <th>Most popular departure station name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Iterate over the departure stations and display the data -->
+    <tr th:each="mp : ${mpDs}">
+        <td th:text="${mp.getDepartureStationName()}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

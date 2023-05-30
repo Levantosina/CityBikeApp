@@ -3,6 +3,7 @@ package org.example.stations.StationsApp.repositories;
 
 import org.example.stations.StationsApp.models.Journey;
 
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -22,19 +23,9 @@ import java.util.List;
 public interface JourneyRepository extends JpaRepository<Journey, Integer> {
 
 
-//    @Query(value = "SELECT j.id, j.departure, j.return, j.departure_station_id, j.departure_station_name,\n" +
-//            "       j.return_station_id, j.return_station_name, j.covered_distance, j.duration\n" +
-//            "FROM june2021 j where duration>10\n" +
-//            "UNION ALL\n" +
-//            "SELECT m.id, m.departure, m.return, m.departure_station_id, m.departure_station_name,\n" +
-//            "       m.return_station_id, m.return_station_name, m.covered_distance, m.duration\n" +
-//            "FROM may2021 m where duration>10", nativeQuery = true)
-//    Page<Test> findStation(Pageable pageable);
 
-
-    @Query(value = "SELECT NEW org.example.stations.StationsApp.models.Journey(j.departureStationName, j.returnStationName, j.coveredDistance, j.duration) FROM Journey j ",nativeQuery = false)
-    Page<Journey> findALLSt(Pageable pageable);
-
+//        @Query(value = "SELECT j from Journey j")
+//        Page<Journey> findALL(Pageable pageable);
     @Query(value = "select distinct new org.example.stations.StationsApp.models.Journey (j.departureStationName)  from Journey j",nativeQuery = false)
     Page<Journey> findDistinctDepartureStationName(Pageable pageable);
 
@@ -56,7 +47,15 @@ public interface JourneyRepository extends JpaRepository<Journey, Integer> {
     @Query("SELECT j.returnStationId FROM Journey j WHERE j.returnStationName = :stationName")
     Integer findStationIdByDepartureStationName(@Param("stationName") String stationName);
 
+
+
+
+    @Query(value = "SELECT new org.example.stations.StationsApp.models.Journey(j.departureStationName) FROM Journey j GROUP BY j.departureStationName ORDER BY COUNT(j.departureStationName)desc ",nativeQuery = false)
+    List<Journey> findMostPopularDepartureStation(Pageable pageable);
+
+
 }
+
 
 
 

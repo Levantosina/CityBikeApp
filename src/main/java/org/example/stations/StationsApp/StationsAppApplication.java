@@ -29,13 +29,15 @@ public class StationsAppApplication implements CommandLineRunner {
 		String quote = "\"";
 		String escape = "''";
 		String whereClause = " WHERE duration >= 10 AND covered_distance >= 10";
+
 		for (String filePath : filePaths) {
 			String sql = String.format("COPY %s %s FROM '%s' DELIMITER '%s' CSV HEADER QUOTE '%s' ESCAPE '%s'%s;", tableNameMay, columnsMay, filePath, delimiter, quote, escape, whereClause);
 			int result = jdbcTemplate.update(sql);
 			if (result == 0) {
-				System.out.println("Data from file " + filePath + " successfully loaded into database");
+				System.out.println("Data from file " + filePath + " successfully loaded into the database");
 			}
 		}
+
 		String[] filePathsSt = new String[]{
 				"C:\\Users\\levan\\Desktop\\ExcelFilesForProject\\stations.csv"
 		};
@@ -58,7 +60,6 @@ public class StationsAppApplication implements CommandLineRunner {
 					}
 				}
 			}
-
 		}
 	}
 }

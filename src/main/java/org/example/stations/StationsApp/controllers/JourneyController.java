@@ -4,6 +4,7 @@ package org.example.stations.StationsApp.controllers;
 
 import org.example.stations.StationsApp.models.Journey;
 
+
 import org.example.stations.StationsApp.services.JourneyService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class JourneyController {
         this.journeyService = journeyService;
 
     }
-
+        //return List of  journeys, sorted and paginated
     @GetMapping("/page/{pageNumber}")
     public String getOnePage(Model model,
                              @PathVariable("pageNumber") int currentPage,
@@ -37,8 +38,9 @@ public class JourneyController {
                              @Param("keyword") String keyword) {
         Page<Journey> page= (Page<Journey>) journeyService.getListOfStations(currentPage,sortField,sortDir,keyword);
         pagination(model,page,currentPage);
-        sorting(model,sortField,sortDir,keyword);
-        return "journey/index";
+         sorting(model,sortField,sortDir,keyword);
+
+         return "journey/index";
     }
     @GetMapping
     public String index(Model model){
@@ -46,6 +48,7 @@ public class JourneyController {
         return getOnePage(model,1,"id","asc",null);
     }
 
+    // here is list stations, clicking on which we get list of journeys
     @GetMapping("/show/page/{pageNumber1}")
     public String getListSt(Model model, @PathVariable("pageNumber1") int currentPage1) {
         Page<Journey> stationPage = journeyService.findOneStation(currentPage1);
@@ -62,7 +65,7 @@ public class JourneyController {
 
         return "journey/showStation";
     }
-
+    //remove journey by departureStationName
     @DeleteMapping("/delete/{departureStationName}")
     public String deleteJourneyById(@PathVariable(name = "departureStationName", required = false) String departureStationName) {
         if (departureStationName != null) {
@@ -70,7 +73,7 @@ public class JourneyController {
         }
         return "redirect:/journey";
     }
-
+    //adding new journey
     @GetMapping("/add")
     public String showAddJourneyForm(Model model) {
         model.addAttribute("journey", new Journey());
@@ -83,6 +86,7 @@ public class JourneyController {
         return "redirect:/journey";
     }
 
+    //Pagination
     private void pagination(Model model, Page<Journey> page, int currentPage) {
         long totalPages = page.getTotalPages();
         long totalItems = page.getTotalElements();
@@ -93,11 +97,19 @@ public class JourneyController {
         model.addAttribute("station", journeyList);
 
     }
+    //Sorting
     private void sorting(Model model,String sortField,String sortDir,String keyword){
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
         model.addAttribute("keyword", keyword);
+    }
+    //Most popular departure stations
+    @GetMapping("/mostPopular")
+    private String mpDs(Model model){
+        List<Journey>mpDs = journeyService.getMostPopularDepartureStations();
+        model.addAttribute("mpDs",mpDs);
+        return "journey/mostPop";
     }
 }
 
