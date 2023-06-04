@@ -2,16 +2,15 @@ package org.example.stations.StationsApp.models;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+
 
 /**
  * @author Levantosina
  */
 @Entity
 @Table(name = "may")
-//@SequenceGenerator(name="seq")
+
 
 public class Journey {
 
@@ -20,14 +19,12 @@ public class Journey {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "departure")
+    @Column(name = "departure_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date departure;
-
-    @Column(name = "return")
+    @Column(name = "return_time")
    @Temporal(TemporalType.TIMESTAMP)
     private Date returnTime;
-
     @Column(name = "departure_station_id")
     private Integer departureStationId;
     @Column(name = "departure_station_name")

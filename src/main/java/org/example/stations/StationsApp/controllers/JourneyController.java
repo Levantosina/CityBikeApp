@@ -6,13 +6,13 @@ import org.example.stations.StationsApp.models.Journey;
 
 
 import org.example.stations.StationsApp.services.JourneyService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 /**
@@ -49,22 +49,22 @@ public class JourneyController {
     }
 
     // here is list stations, clicking on which we get list of journeys
-    @GetMapping("/show/page/{pageNumber1}")
-    public String getListSt(Model model, @PathVariable("pageNumber1") int currentPage1) {
-        Page<Journey> stationPage = journeyService.findOneStation(currentPage1);
-        pagination(model,stationPage,currentPage1);
-        return "journey/show";
-    }
+//    @GetMapping("/show/page/{pageNumber1}")
+//    public String getListSt(Model model, @PathVariable("pageNumber1") int currentPage1) {
+//        Page<journey2> stationPage = journeyService.findOneStation(currentPage1);
+//        pagination(model,stationPage,currentPage1);
+//        return "journey/show";
+//    }
 
 
-    @GetMapping("/show/page/{currentPage}/{id}")
-    public String test(Model model,@PathVariable("id") String id,@PathVariable("currentPage") int currentPage){
-
-        Page<Journey>list = journeyService.findTest(id);
-        pagination(model,list,currentPage);
-
-        return "journey/showStation";
-    }
+//    @GetMapping("/show/page/{currentPage}/{id}")
+//    public String test(Model model,@PathVariable("id") String id,@PathVariable("currentPage") int currentPage){
+//
+//        Page<Journey>list = journeyService.findTest(id);
+//        pagination(model,list,currentPage);
+//
+//        return "journey/showStation";
+//    }
     //remove journey by departureStationName
     @DeleteMapping("/delete/{departureStationName}")
     public String deleteJourneyById(@PathVariable(name = "departureStationName", required = false) String departureStationName) {
@@ -90,7 +90,7 @@ public class JourneyController {
     private void pagination(Model model, Page<Journey> page, int currentPage) {
         long totalPages = page.getTotalPages();
         long totalItems = page.getTotalElements();
-        List<Journey>journeyList = page.getContent();
+        List<Journey> journeyList = page.getContent();
         model.addAttribute("currentPage", currentPage);
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("totalItems", totalItems);

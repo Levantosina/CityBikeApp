@@ -24,7 +24,7 @@ public class StationsAppApplication implements CommandLineRunner {
 				"C:\\Users\\levan\\Desktop\\ExcelFilesForProject\\2021-05.csv"
 		};
 		String tableNameMay = "may";
-		String columnsMay = "(departure, \"return\", departure_station_id, departure_station_name, return_station_id, return_station_name, covered_distance, duration)";
+		String columnsMay = "(departure_time, return_time, departure_station_id, departure_station_name, return_station_id, return_station_name, covered_distance, duration)";
 		String delimiter = ";";
 		String quote = "\"";
 		String escape = "''";

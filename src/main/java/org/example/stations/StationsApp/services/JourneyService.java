@@ -25,22 +25,50 @@ public class JourneyService {
     private final JourneyRepository journeyRepository;
 
 
-
-
-
-
     public JourneyService(JourneyRepository journeyRepository) {
         this.journeyRepository = journeyRepository;
 
-
     }
+
+
+    private boolean isValidDirection(String dir) {
+        return dir.equals("asc") || dir.equals("desc");
+    }
+
+    private boolean isValidField(String field) {
+        return field.equals("id") || field.equals("departureStationName") || field.equals("returnStationName") ||
+                field.equals("departure") || field.equals("returnTime");
+    }
+
+
+
     public Page<Journey> getListOfStations(int pageNum, String sortField, String sortDir, String keyword) {
+
+        //validate page number
+        if(pageNum<0)
+        {
+            throw new IllegalArgumentException("Page number can not be less than 1");
+        }
+
+
+        //validate sort direction and sort field
+
+        if(!isValidDirection(sortDir))
+        {
+            throw new IllegalArgumentException("Sort direction is invalid");
+        }
+
+        if(!isValidField(sortField))
+        {
+            throw new IllegalArgumentException("Sort field is invalid");
+        }
+
 
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
                 Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(pageNum - 1, PAGE_SIZE, sort);
-        if(keyword==null)
-            return journeyRepository.findAll(pageable);
+        if(keyword==null||keyword.isEmpty())
+            return journeyRepository.findAllJouney(pageable);
         else
             return journeyRepository.search(keyword, pageable);
     }
@@ -80,10 +108,10 @@ public class JourneyService {
     }
 
     public List<Journey> getMostPopularDepartureStations() {
-
         List<Journey> popularDepartureStations = journeyRepository.findMostPopularDepartureStation(PageRequest.of(0, 5));
         return popularDepartureStations;
     }
+
 
 
 }
