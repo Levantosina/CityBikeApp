@@ -29,7 +29,7 @@ public class JourneyController {
         this.journeyService = journeyService;
 
     }
-        //return List of  journeys, sorted and paginated
+    //return List of  journeys, sorted and paginated
     @GetMapping("/page/{pageNumber}")
     public String getOnePage(Model model,
                              @PathVariable("pageNumber") int currentPage,
@@ -48,24 +48,6 @@ public class JourneyController {
         return getOnePage(model,1,"id","asc",null);
     }
 
-    // here is list stations, clicking on which we get list of journeys
-//    @GetMapping("/show/page/{pageNumber1}")
-//    public String getListSt(Model model, @PathVariable("pageNumber1") int currentPage1) {
-//        Page<journey2> stationPage = journeyService.findOneStation(currentPage1);
-//        pagination(model,stationPage,currentPage1);
-//        return "journey/show";
-//    }
-
-
-//    @GetMapping("/show/page/{currentPage}/{id}")
-//    public String test(Model model,@PathVariable("id") String id,@PathVariable("currentPage") int currentPage){
-//
-//        Page<Journey>list = journeyService.findTest(id);
-//        pagination(model,list,currentPage);
-//
-//        return "journey/showStation";
-//    }
-    //remove journey by departureStationName
     @DeleteMapping("/delete/{departureStationName}")
     public String deleteJourneyById(@PathVariable(name = "departureStationName", required = false) String departureStationName) {
         if (departureStationName != null) {
