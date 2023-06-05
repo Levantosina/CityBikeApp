@@ -47,7 +47,7 @@ public interface JourneyRepository extends JpaRepository<Journey, Integer> {
     Integer findStationIdByDepartureStationName(@Param("stationName") String stationName);
 
     @Query(value = "SELECT new org.example.stations.StationsApp.models.Journey(j.departureStationName) FROM Journey j GROUP BY j.departureStationName ORDER BY COUNT(j.departureStationName)desc ",nativeQuery = false)
-    List<Journey> findMostPopularDepartureStation(Pageable pageable);
+    Page<Journey> findMostPopularDepartureStation(Pageable pageable);
 
 
 }

@@ -1,6 +1,10 @@
 package org.example.stations.StationsApp.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -28,18 +32,20 @@ public class Journey {
     @Column(name = "departure_station_id")
     private Integer departureStationId;
     @Column(name = "departure_station_name")
+
     private String departureStationName;
     @Column(name = "return_station_id")
     private Integer returnStationId;
     @Column(name = "return_station_name")
+
     private String returnStationName;
-
-
     @Column(name = "covered_distance")
+
     private Double coveredDistance;
 
     @Column(name = "duration")
-    private Long duration;
+
+    private Integer duration;
 
 
 
@@ -47,7 +53,7 @@ public class Journey {
 
     }
 
-    public Journey(Integer id, Timestamp departure, Timestamp returnTime, Integer departureStationId, String departureStationName, Integer returnStationId, String returnStationName, Double coveredDistance, Long duration) {
+    public Journey(Integer id, Timestamp departure, Timestamp returnTime, Integer departureStationId, String departureStationName, Integer returnStationId, String returnStationName, Double coveredDistance, Integer duration) {
         this.id = id;
         this.departure = departure;
         this.returnTime = returnTime;
@@ -60,14 +66,14 @@ public class Journey {
     }
 
 
-    public Journey( String departureStationName, String returnStationName, Double coveredDistance, Long duration) {
+    public Journey( String departureStationName, String returnStationName, Double coveredDistance, Integer duration) {
         this.departureStationName = departureStationName;
         this.returnStationName = returnStationName;
         this.coveredDistance = coveredDistance;
         this.duration = duration;
     }
 
-    public Journey(Date departure, Double coveredDistance, Long duration) {
+    public Journey(Date departure, Double coveredDistance, Integer duration) {
         this.departure = departure;
         this.coveredDistance = coveredDistance;
         this.duration = duration;
@@ -141,11 +147,11 @@ public class Journey {
         this.coveredDistance = coveredDistance;
     }
 
-    public Long getDuration() {
+    public Integer getDuration() {
         return duration;
     }
 
-    public void setDuration(Long duration) {
+    public void setDuration(Integer duration) {
         this.duration = duration;
     }
 

@@ -8,26 +8,39 @@
 <body>
 
 <!--implement the form to add a new journey -->
-<form th:action="@{/journey/add}" method="post">
- <div>
-   <label for="departureStationName">Departure Station Name:</label>
-   <input type="text" id="departureStationName" name="departureStationName" required>
- </div>
- <div>
-   <label for="returnStationName">Return Station Name:</label>
-   <input type="text" id="returnStationName" name="returnStationName" required>
- </div>
- <div>
-   <label for="coveredDistance">Covered Distance:</label>
-   <input type="number" id="coveredDistance" name="coveredDistance" required>
- </div>
- <div>
-   <label for="duration">Duration:</label>
-   <input type="number" id="duration" name="duration" required>
- </div>
- <div>
-   <button type="submit">Add Journey</button>
- </div>
+<form th:action="@{/journey/add}" method="post" th:object="${journey}">
+    <!-- Departure Station Name -->
+    <div>
+        <label for="departureStationName">Departure Station Name:</label>
+        <input type="text" id="departureStationName" name="departureStationName" required>
+        <span th:if="${#fields.hasErrors('departureStationName')}" th:errors="*{departureStationName}"></span>
+    </div>
+
+    <!-- Return Station Name -->
+    <div>
+        <label for="returnStationName">Return Station Name:</label>
+        <input type="text" id="returnStationName" name="returnStationName" required>
+        <span th:if="${#fields.hasErrors('returnStationName')}" th:errors="*{returnStationName}"></span>
+    </div>
+
+    <!-- Covered Distance -->
+    <div>
+        <label for="coveredDistance">Covered Distance:</label>
+        <input type="number" id="coveredDistance" name="coveredDistance" required>
+        <span th:if="${#fields.hasErrors('coveredDistance')}" th:errors="*{coveredDistance}"></span>
+    </div>
+
+    <!-- Duration -->
+    <div>
+        <label for="duration">Duration:</label>
+        <input type="number" id="duration" name="duration" required>
+        <span th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}"></span>
+    </div>
+
+    <div>
+        <button type="submit">Add Journey</button>
+    </div>
 </form>
+
 </body>
 </html>

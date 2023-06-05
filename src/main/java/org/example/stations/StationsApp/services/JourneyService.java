@@ -30,39 +30,25 @@ public class JourneyService {
 
     }
 
-
-    private boolean isValidDirection(String dir) {
-        return dir.equals("asc") || dir.equals("desc");
-    }
-
-    private boolean isValidField(String field) {
-        return field.equals("id") || field.equals("departureStationName") || field.equals("returnStationName") ||
-                field.equals("departure") || field.equals("returnTime");
-    }
+//    private boolean isValidCoveredDistance(Double coveredDistance) {
+//       if(coveredDistance<0)
+//              throw new IllegalArgumentException("Covered distance can not be less than 0");
+//       else
+//           return true;
+//    }
+//
+//    private boolean isValidDirection(String dir) {
+//        return dir.equals("asc") || dir.equals("desc");
+//    }
+//
+//    private boolean isValidField(String field) {
+//        return field.equals("id") || field.equals("departureStationName") || field.equals("returnStationName") ||
+//                field.equals("departure") || field.equals("returnTime");
+//    }
 
 
 
     public Page<Journey> getListOfStations(int pageNum, String sortField, String sortDir, String keyword) {
-
-        //validate page number
-        if(pageNum<0)
-        {
-            throw new IllegalArgumentException("Page number can not be less than 1");
-        }
-
-
-        //validate sort direction and sort field
-
-        if(!isValidDirection(sortDir))
-        {
-            throw new IllegalArgumentException("Sort direction is invalid");
-        }
-
-        if(!isValidField(sortField))
-        {
-            throw new IllegalArgumentException("Sort field is invalid");
-        }
-
 
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
                 Sort.by(sortField).descending();
@@ -87,6 +73,7 @@ public class JourneyService {
     }
     @Transactional
     public void addJourney(Journey journey) {
+
         // Set the departure and return time automatically
         journey.setDeparture(new Date());
         journey.setReturnTime(new Date());
@@ -102,16 +89,14 @@ public class JourneyService {
         // Set the station IDs
         journey.setDepartureStationId(departureStationId);
         journey.setReturnStationId(returnStationId);
-
         // Save the journey
         journeyRepository.save(journey);
     }
 
-    public List<Journey> getMostPopularDepartureStations() {
-        List<Journey> popularDepartureStations = journeyRepository.findMostPopularDepartureStation(PageRequest.of(0, 5));
-        return popularDepartureStations;
+    public Page<Journey> getMostPopularDepartureStations() {
+       Pageable pageable = PageRequest.of(1, 5);
+        return journeyRepository.findMostPopularDepartureStation(pageable);
     }
-
 
 
 }
