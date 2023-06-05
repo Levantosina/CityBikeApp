@@ -3,11 +3,13 @@ package org.example.stations.StationsApp.services;
 
 import org.example.stations.StationsApp.models.Journey;
 
+import org.example.stations.StationsApp.models.Stations;
 import org.example.stations.StationsApp.repositories.*;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.NonUniqueResultException;
 import java.util.Date;
 import java.util.List;
 
@@ -98,6 +100,14 @@ public class JourneyService {
         return journeyRepository.findMostPopularDepartureStation(pageable);
     }
 
+    public boolean doesStationExist(String stationName) {
+        try {
+            List<Journey> stations = journeyRepository.findDistinctByDepartureStationName(stationName);
+            return !stations.isEmpty();
+        } catch (NonUniqueResultException ex) {
+            throw new IllegalStateException("Multiple stations found with the same name");
+        }
+    }
 
 }
 

@@ -50,6 +50,10 @@ public interface JourneyRepository extends JpaRepository<Journey, Integer> {
     Page<Journey> findMostPopularDepartureStation(Pageable pageable);
 
 
+
+    List<Journey>findDistinctByDepartureStationName(String departureStationName);
+
+
 }
 
 

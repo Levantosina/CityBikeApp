@@ -13,4 +13,5 @@ import java.util.List;
 public interface StationRepository  extends JpaRepository<Stations, Integer>{
 
     Page<Stations> findAll(Pageable pageable);
+
 }

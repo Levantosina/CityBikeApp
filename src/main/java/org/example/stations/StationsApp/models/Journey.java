@@ -52,6 +52,21 @@ public class Journey {
     public Journey() {
 
     }
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "departure_station_id", referencedColumnName = "id", insertable = false, updatable = false)
+//    private Stations departureStation;
+//
+//    public Stations getDepartureStation() {
+//        return departureStation;
+//    }
+//
+//    public void setDepartureStation(Stations departureStation) {
+//        this.departureStation = departureStation;
+//    }
+//
+//    public Journey(Stations departureStation) {
+//        this.departureStation = departureStation;
+//    }
 
     public Journey(Integer id, Timestamp departure, Timestamp returnTime, Integer departureStationId, String departureStationName, Integer returnStationId, String returnStationName, Double coveredDistance, Integer duration) {
         this.id = id;

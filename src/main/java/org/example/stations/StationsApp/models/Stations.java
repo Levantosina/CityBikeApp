@@ -1,6 +1,8 @@
 package org.example.stations.StationsApp.models;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author Levantosina
@@ -8,7 +10,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "stations")
-public class Stations {
+public class Stations   {
 
 
     @Id
@@ -47,6 +49,21 @@ public class Stations {
 
     }
 
+
+//    @OneToMany(mappedBy = "departureStation", cascade = CascadeType.ALL)
+//    private List<Journey> departureJourneys;
+//
+//    public Stations(List<Journey> departureJourneys) {
+//        this.departureJourneys = departureJourneys;
+//    }
+//
+//    public List<Journey> getDepartureJourneys() {
+//        return departureJourneys;
+//    }
+//
+//    public void setDepartureJourneys(List<Journey> departureJourneys) {
+//        this.departureJourneys = departureJourneys;
+//    }
 
     public Stations(Integer fid, String name, Double x, Double y) {
         this.fid = fid;
